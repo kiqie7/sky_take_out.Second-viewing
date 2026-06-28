@@ -6,3 +6,16 @@ sky:
     database: sky_take_out
     username: root
     password: 123456
+  alioss:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      access-key-id: YOUR_ACCESS_KEY_ID
+      access-key-secret: YOUR_ACCESS_KEY_SECRET
+      bucket-name: shiro-1
+  redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 10
+  wechat:
+      appid: wxeb7a1db3c5e4c776
+      secret: 8554265eca2ccf6b2226d74601e590ba
