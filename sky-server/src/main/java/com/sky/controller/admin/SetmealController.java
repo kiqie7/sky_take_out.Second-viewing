@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * 套餐管理
@@ -48,6 +50,17 @@ public class SetmealController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 批量删除套餐
+     */
+
+    @DeleteMapping
+    @ApiOperation("批量删除套餐")
+    public Result delete(@RequestParam List<Long> ids) {
+
+        setmealService.delete(ids);
+        return Result.success();
+    }
 
 
 
