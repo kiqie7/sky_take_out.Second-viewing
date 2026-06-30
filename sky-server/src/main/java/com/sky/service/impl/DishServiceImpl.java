@@ -151,6 +151,17 @@ public class DishServiceImpl implements DishiService {
         return dishMapper.listByCategoryId(dish);
     }
 
+    /**
+     * 菜品起售、停售
+     */
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+        dishMapper.update(dish);
+    }
+
 
 
 

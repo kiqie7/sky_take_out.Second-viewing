@@ -44,4 +44,9 @@ public interface DishiService {
      * 根据分类id查菜品
      */
     List<Category> listByCategoryId(Long categoryId);
+
+    /**
+     * 菜品起售、停售
+     */
+    void startOrStop(Integer status, Long id);
 }
