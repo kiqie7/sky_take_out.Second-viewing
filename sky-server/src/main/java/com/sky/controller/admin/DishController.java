@@ -5,7 +5,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
-import com.sky.service.DishiService;
+import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +28,7 @@ public class DishController {
 
 
     @Autowired
-    private DishiService dishiService;
+    private DishService dishiService;
 
     /**
      * 新增菜品
@@ -103,7 +103,6 @@ public class DishController {
         dishiService.updateWithFlavor(dishDTO);
         return Result.success();
     }
-
 
     /**
      * 根据分类id查菜品

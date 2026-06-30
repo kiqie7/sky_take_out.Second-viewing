@@ -79,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置帐号状态
         employee.setStatus(StatusConstant.ENABLE);
         //设置默认密码
-        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+        employee.setPassword(DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()));
        /* //设置记录创建时间和修改时间
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());

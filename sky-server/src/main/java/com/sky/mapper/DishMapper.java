@@ -64,6 +64,14 @@ public interface DishMapper {
      * 根据分类id查菜品
      */
     List<Category> listByCategoryId(Dish dish);
+
+    /**
+     * 条件查询菜品
+     * @param dish
+     * @return
+     */
+    List<Dish> list(Dish dish);
+
     /**
      * 根据套餐id查询菜品
      * @param setmealId
