@@ -419,4 +419,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    /**
+     * 商家取消订单
+     *
+     * @param ordersCancelDTO
+     */
+    public void cancel(OrdersCancelDTO ordersCancelDTO) throws Exception {
+
+        Orders ordersDB = orderMapper.getById(ordersCancelDTO.getId());
+
+        Integer payStatus = ordersDB.getPayStatus();
+        if (payStatus == Orders.PAID){
+            payStatus = Orders.REFUND;
+
+        }
+
+        Orders orders = new Orders();
+        orders.setId(ordersCancelDTO.getId());
+        orders.setPayStatus(payStatus);
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelTime(LocalDateTime.now());
+        orders.setCancelReason(ordersCancelDTO.getCancelReason());
+        orderMapper.update(orders);
+
+    }
+
+
 }
