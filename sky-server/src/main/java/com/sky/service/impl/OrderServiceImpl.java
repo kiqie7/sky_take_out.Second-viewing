@@ -232,4 +232,40 @@ public class OrderServiceImpl implements OrderService {
         return orderVO;
     }
 
+    /**
+     * 用户取消订单
+     * @param id
+     */
+    public void userCancelById(Long id) {
+
+        //根据id查询订单
+        Orders orderDB = orderMapper.getById(id);
+
+        //校验订单是否存在
+        if (orderDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        //订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
+        if (orderDB.getStatus() > 2){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+        Orders orders = new Orders();
+        orders.setId(orderDB.getId());
+
+        //订单处于接单状态下，需要退款
+        if (orderDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            // 执行退款逻辑
+            ///////////////
+            //支付状态修改为 退款
+            orders.setPayStatus(Orders.REFUND);
+        }
+
+        //更新订单状态，取消原因，取消时间
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelReason("用户取消");
+        orders.setCancelTime(LocalDateTime.now());
+        orderMapper.update(orders);
+
+    }
+
 }
