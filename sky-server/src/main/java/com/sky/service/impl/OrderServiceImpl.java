@@ -385,5 +385,38 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 拒单
+     */
+    public void rejection(OrdersRejectionDTO ordersRejectionDTO) {
+
+        //根据id查询订单
+        Orders ordersDB = orderMapper.getById(ordersRejectionDTO.getId());
+
+        //订单只有存在且状态为2(待接单)才可以拒单
+
+        if (ordersDB == null || !ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        //支付状态
+        Integer payStatus = ordersDB.getPayStatus();
+        if (payStatus == Orders.PAID){
+            //用户已支付，需要退款
+            ////////////退款逻辑
+            payStatus = Orders.REFUND;
+        //拒单需要退款，根据订单id更新订单状态，拒单原因，取消时间
+            Orders orders = new Orders();
+            orders.setId(ordersDB.getId());
+            orders.setPayStatus(payStatus);
+            orders.setStatus(Orders.CANCELLED);
+            orders.setRejectionReason(ordersRejectionDTO.getRejectionReason());
+            orders.setCancelTime(LocalDateTime.now());
+            orderMapper.update(orders);
+
+        }
+
+    }
+
 
 }
